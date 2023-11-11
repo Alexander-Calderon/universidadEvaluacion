@@ -21,8 +21,8 @@ public class ProfesorController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]    
     public async Task<ActionResult<List<ProfesorDto>>> GetAll() {
-        var profesors = await _unitOfWork.Profesores.GetAll();
-        return _mapper.Map<List<ProfesorDto>>(profesors); 
+        var profesores = await _unitOfWork.Profesores.GetAll();
+        return _mapper.Map<List<ProfesorDto>>(profesores); 
     }
 
     [HttpGet("{id}")]
@@ -59,9 +59,9 @@ public class ProfesorController : BaseApiController
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ProfesorDto>> Actualizar(ProfesorDto profesorDto)
+    public async Task<ActionResult<Profesor>> Actualizar(Profesor profesor)
     {
-        var dato = await _unitOfWork.Profesores.GetById(profesorDto.Id);
+        var dato = await _unitOfWork.Profesores.GetById(profesor.IdProfesor);
         if (dato == null)
         {
             return BadRequest();
@@ -69,7 +69,7 @@ public class ProfesorController : BaseApiController
         _unitOfWork.Profesores.Update(dato);
         await _unitOfWork.SaveAsync();
 
-        return profesorDto;
+        return profesor;
     }
 
 

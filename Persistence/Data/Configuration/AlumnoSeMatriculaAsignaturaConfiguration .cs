@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,9 +9,15 @@ namespace Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AlumnoSeMatriculaAsignatura> builder)
         {
-            builder.HasKey(e => new { e.IdAlumno, e.IdAsignatura, e.IdCurso }).HasName("PRIMARY");
+            builder.HasKey(e => new { e.IdAlumno, e.IdAsignatura, e.IdCurso })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
             builder.ToTable("alumno_se_matricula_asignatura");
+
+            builder.HasIndex(e => e.IdAsignatura, "id_asignatura");
+
+            builder.HasIndex(e => e.IdCurso, "id_curso");
 
             builder.Property(e => e.IdAlumno).HasColumnName("id_alumno");
             builder.Property(e => e.IdAsignatura).HasColumnName("id_asignatura");
@@ -22,15 +25,18 @@ namespace Infrastructure.Data.Configuration
 
             builder.HasOne(d => d.IdAlumnoNavigation).WithMany(p => p.AlumnoSeMatriculaAsignaturas)
                 .HasForeignKey(d => d.IdAlumno)
-                .HasConstraintName("alumnosematriculaasignaturas_ibfk_1");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("alumno_se_matricula_asignatura_ibfk_1");
 
             builder.HasOne(d => d.IdAsignaturaNavigation).WithMany(p => p.AlumnoSeMatriculaAsignaturas)
                 .HasForeignKey(d => d.IdAsignatura)
-                .HasConstraintName("alumnosematriculaasignaturas_ibfk_2");
-            
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("alumno_se_matricula_asignatura_ibfk_2");
+
             builder.HasOne(d => d.IdCursoNavigation).WithMany(p => p.AlumnoSeMatriculaAsignaturas)
                 .HasForeignKey(d => d.IdCurso)
-                .HasConstraintName("alumnosematriculaasignaturas_ibfk_3");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("alumno_se_matricula_asignatura_ibfk_3");
 
 
 

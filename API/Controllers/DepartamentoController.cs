@@ -93,7 +93,109 @@ public class DepartamentoController : BaseApiController
 
     // Consultas
 
-    
+    [HttpGet("C10GetDepartamentosConAsignaturasEnGradoInformatica")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<DepartamentoDto>>> C10GetDepartamentosConAsignaturasEnGradoInformatica()
+    {
+        try
+        {
+            var departamentos = await _unitOfWork.Departamentos.C10GetDepartamentosConAsignaturasEnGradoInformatica();            
+            return Ok( _mapper.Map<List<DepartamentoDto>>(departamentos) );
+        }
+        catch (Exception)
+        {            
+            return StatusCode(500, new { MensajeError = "Error al obtener los departamentos con asignaturas en el Grado de Ingeniería Informática." });
+        }
+    }
+
+
+    [HttpGet("C16GetDepartamentosConAsignaturasNoImpartidas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C16GetDepartamentosConAsignaturasNoImpartidas()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Departamentos.C16GetDepartamentosConAsignaturasNoImpartidas();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener departamentos con asignaturas no impartidas." });
+        }
+    }
+
+
+    [HttpGet("C19GetCantidadProfesoresPorDepartamento")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C19GetCantidadProfesoresPorDepartamento()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Departamentos.C19GetCantidadProfesoresPorDepartamento();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al calcular la cantidad de profesores por departamento." });
+        }
+    }
+
+
+    [HttpGet("C20GetTodosDepartamentosConProfesores")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C20GetTodosDepartamentosConProfesores()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Departamentos.C20GetTodosDepartamentosConProfesores();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener la información de los departamentos con profesores." });
+        }
+    }
+
+
+    [HttpGet("C28GetDepartamentosSinProfesores")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> C28GetDepartamentosSinProfesores()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Departamentos.C28GetDepartamentosSinProfesores();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los departamentos sin profesores." });
+        }
+    }
+
+    [HttpGet("C31GetDepartamentosSinAsignaturas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<Departamento>>> C31GetDepartamentosSinAsignaturas()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Departamentos.C31GetDepartamentosSinAsignaturas();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los departamentos sin asignaturas." });
+        }
+    }
+
+
+
+
 
 
 }

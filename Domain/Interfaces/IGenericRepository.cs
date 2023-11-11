@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 
 namespace Domain;
-public interface IGenericRepository<T> where T : BaseEntity
+public interface IGenericRepository<T> where T : class /* where T : BaseEntity */ /* fix para que ENTIDADES intermedias con campos puedan usar el IGeneric sin tener que heredar de BaseEntity, se cambió por where T : class*/
 {
     void Add(T entity);
     void AddRange(IEnumerable<T> entities);

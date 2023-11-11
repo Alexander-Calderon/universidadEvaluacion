@@ -7,7 +7,7 @@ namespace API.Dtos;
 public class PersonaDto
 {
     public int Id {get; set;}
-    public string Dni { get; set; }
+    public string Nif { get; set; }
 
     public string Nombre { get; set; }
 

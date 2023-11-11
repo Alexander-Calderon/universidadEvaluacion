@@ -7,6 +7,6 @@ namespace API.Dtos;
 public class CursoEscolarDto
 {
     public int Id {get; set;}
-    public short AnyoInicio { get; set; }
-    public short AnyoFin { get; set; }
+    public short AnioInicio { get; set; }
+    public short AnioFin { get; set; }
 }

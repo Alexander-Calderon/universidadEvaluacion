@@ -93,7 +93,56 @@ public class GradoController : BaseApiController
 
     // Consultas
 
-    
+    [HttpGet("C21GetTodosGradosConAsignaturas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C21GetTodosGradosConAsignaturas()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Grados.C21GetTodosGradosConAsignaturas();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener la información de los grados con asignaturas." });
+        }
+    }
+
+
+    [HttpGet("C22GetGradosConMasDe40Asignaturas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C22GetGradosConMasDe40Asignaturas()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Grados.C22GetGradosConMasDe40Asignaturas();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los grados con más de 40 asignaturas." });
+        }
+    }
+
+    [HttpGet("C23GetSumaCreditosPorTipoAsignatura")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C23GetSumaCreditosPorTipoAsignatura()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Grados.C23GetSumaCreditosPorTipoAsignatura();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener la suma de créditos por tipo de asignatura." });
+        }
+    }
+
+
 
 
 }

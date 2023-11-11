@@ -92,6 +92,90 @@ public class AsignaturaController : BaseApiController
 
 
     // Consultas
+    
+    [HttpGet("C5GetAsignaturasPrimerCuatrimestreTercerCurso")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<AsignaturaDto>>> C5GetAsignaturasPrimerCuatrimestreTercerCurso()
+    {
+        var asignaturas = await _unitOfWork.Asignaturas.C5GetAsignaturasPrimerCuatrimestreTercerCurso();
+        return _mapper.Map<List<AsignaturaDto>>(asignaturas);
+    }
+
+    [HttpGet("C7GetAsignaturasPorNombreGrado")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<Asignatura>>> C7GetAsignaturasPorNombreGrado()
+    {
+        try
+        {
+            var asignaturas = await _unitOfWork.Asignaturas.C7GetAsignaturasPorNombreGrado();
+            return Ok(asignaturas);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener las asignaturas por nombre de grado." });
+        }
+    }
+
+
+
+    [HttpGet("C9GetInfoCursoAlumno")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C9GetInfoCursoAlumno()
+    {        
+        try
+        {
+            var infoCurso = await _unitOfWork.Asignaturas.C9GetInfoCursoAlumno();
+            return Ok(infoCurso);
+        }
+        catch (Exception)
+        {            
+            return StatusCode(500, new { MensajeError = "Error al obtener la información del curso para el alumno." });
+        }
+    }
+
+
+
+    [HttpGet("C15GetAsignaturasSinProfesor")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<Asignatura>>> C15GetAsignaturasSinProfesor()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Asignaturas.C15GetAsignaturasSinProfesor();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener asignaturas sin profesor asignado." });
+        }
+    }
+
+    [HttpGet("C30GetAsignaturasSinProfesor")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<Asignatura>>> C30GetAsignaturasSinProfesor()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Asignaturas.C30GetAsignaturasSinProfesor();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener las asignaturas sin profesor." });
+        }
+    }
+
+
+
+    
+
+
+
 
     
 

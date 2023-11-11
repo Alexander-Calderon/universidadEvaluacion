@@ -46,15 +46,15 @@ public partial class ApiContext : DbContext
 
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            // Configuraciones adicionales aquí
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     if (!optionsBuilder.IsConfigured)
+    //     {
+    //         // Configuraciones adicionales aquí
 
-            optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
-        }
-    }
+    //         optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
+    //     }
+    // }
 
 
     

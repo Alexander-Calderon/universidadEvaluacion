@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
 namespace Application.Repository;
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public class GenericRepository<T> : IGenericRepository<T>  where T : class /* where T : BaseEntity */ /* where T : BaseEntity */ /* fix para que REPOSITORIOS de intermedias con campos puedan usar el Generic sin tener que heredar de BaseEntity, se cambió por where T : class*/
 {
     private readonly ApiContext _context;
     public GenericRepository(ApiContext context){

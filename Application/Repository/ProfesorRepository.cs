@@ -13,6 +13,14 @@ public class ProfesorRepository : GenericRepository<Profesor>, IProfesor
         _context = context;
     }
 
+    // para diccionario anidado
+    public override async Task<IEnumerable<Profesor>> GetAll()
+    {
+        return await _context.Profesores
+        .Include(x => x.IdDepartamentoNavigation)
+        .Include(x => x.IdProfesorNavigation)
+        .ToListAsync();
+    }
     
 
     

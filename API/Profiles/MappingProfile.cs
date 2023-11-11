@@ -12,9 +12,13 @@ public class MappingProfile : Profile
         CreateMap<Asignatura, AsignaturaDto>().ReverseMap();
         CreateMap<CursoEscolar, CursoEscolarDto>().ReverseMap();
         CreateMap<Departamento, DepartamentoDto>().ReverseMap();
-        CreateMap<Grado, GradoDto>().ReverseMap();
+        CreateMap<Grado, GradoDto>()
+        .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.NombreGrado))
+        .ReverseMap();
         CreateMap<Persona,PersonaDto>().ReverseMap();
-        CreateMap<Profesor,ProfesorDto>().ReverseMap();
+        CreateMap<Profesor,ProfesorDto>()
+        .ForMember(dest => dest.Profesor, opt => opt.MapFrom(src => src.IdProfesorNavigation))
+        .ReverseMap();
         
         CreateMap<Persona, AlumnoLightDto>().ReverseMap();
         

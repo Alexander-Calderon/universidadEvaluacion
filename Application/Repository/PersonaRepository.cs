@@ -57,7 +57,7 @@ public class PersonaRepository : GenericRepository<Persona>, IPersona
     // {
     //     return await _context.Asignaturas
     //         .Where(a => a.AlumnoSeMatriculaAsignaturas
-    //             .Any(matricula => matricula.IdAlumnoNavigation.Dni == "26902806M"))
+    //             .Any(matricula => matricula.IdAlumnoNavigation.Nif == "26902806M"))
     //         .ToListAsync();
     // }
 
@@ -129,7 +129,7 @@ public class PersonaRepository : GenericRepository<Persona>, IPersona
     public async Task<IEnumerable<Persona>> C4GetProfesoresSinTelefonoYNifK()
     {
         var profesoresSinTelefonoYNifK = await _context.Personas
-            .Where(p => p.TipoPersona == "profesor" && string.IsNullOrEmpty(p.Telefono) && p.Dni.EndsWith("K"))
+            .Where(p => p.TipoPersona == "profesor" && string.IsNullOrEmpty(p.Telefono) && p.Nif.EndsWith("K"))
             .ToListAsync();
 
         return profesoresSinTelefonoYNifK;
@@ -148,8 +148,115 @@ public class PersonaRepository : GenericRepository<Persona>, IPersona
     }
 
 
+    // 12. Devuelve un listado con los nombres de **todos** los profesores y los departamentos que tienen vinculados. El listado también debe mostrar aquellos profesores que no tienen ningún departamento asociado. El listado debe devolver cuatro columnas, nombre del departamento, primer apellido, segundo apellido y nombre del profesor. El resultado estará ordenado alfabéticamente de menor a mayor por el nombre del departamento, apellidos y el nombre.
+    public async Task<IEnumerable<object>> C12GetProfesoresConDepartamento()
+    {
+        var profesoresConDepartamento = await _context.Profesores
+            .Include(p => p.IdDepartamentoNavigation) 
+            .OrderBy(p => p.IdDepartamentoNavigation.NombreDepartamento)
+            .ThenBy(p => p.IdProfesorNavigation.Apellido1)
+            .ThenBy(p => p.IdProfesorNavigation.Apellido2)
+            .ThenBy(p => p.IdProfesorNavigation.Nombre)
+            .Select(p => new
+            {
+                NombreDepartamento = p.IdDepartamentoNavigation != null ? p.IdDepartamentoNavigation.NombreDepartamento : "Sin Departamento",
+                PrimerApellido = p.IdProfesorNavigation.Apellido1,
+                SegundoApellido = p.IdProfesorNavigation.Apellido2,
+                Nombre = p.IdProfesorNavigation.Nombre
+            })
+            .ToListAsync();
+
+        return profesoresConDepartamento;
+    }   
+
+    // 13. Devuelve un listado con los profesores que no están asociados a un departamento.Devuelve un listado con los departamentos que no tienen profesores asociados.
+    public async Task<IEnumerable<object>> C13GetProfesoresYDepartamentosSinAsociar()
+    {
+        var profesoresSinDepartamento = await _context.Profesores
+            .Where(p => p.IdDepartamento == null)
+            .Select(p => new
+            {
+                Nombre = $"{p.IdDepartamentoNavigation.NombreDepartamento} {p.IdPersonaNavigation.Apellido1} {p.IdPersonaNavigation.Apellido2}",
+                Tipo = "Profesor",
+                Departamento = "Sin Departamento"
+            })
+            .ToListAsync();
+
+        var departamentosSinProfesores = await _context.Departamentos
+            .Where(d => !d.Profesores.Any())
+            .Select(d => new
+            {
+                Nombre = d.NombreDepartamento,
+                Tipo = "Departamento",
+                Departamento = "Sin Profesores"
+            })
+            .ToListAsync();
+
+        var resultado = profesoresSinDepartamento.Concat(departamentosSinProfesores);
+        return resultado;
+    }
+
+
+    // 14. Devuelve un listado con los profesores que no imparten ninguna asignatura.
+    public async Task<IEnumerable<Persona>> C14GetProfesoresSinAsignaturas()
+    {
+        var profesoresSinAsignaturas = await _context.Personas
+            .Where(p => p.TipoPersona == "profesor" && !p.Profesor.Asignaturas.Any())
+            .ToListAsync();
+
+        return profesoresSinAsignaturas;
+    }
+
+    // 25. Devuelve un listado con el número de asignaturas que imparte cada profesor. El listado debe tener en cuenta aquellos profesores que no imparten ninguna asignatura. El resultado mostrará cinco columnas: id, nombre, primer apellido, segundo apellido y número de asignaturas. El resultado estará ordenado de mayor a menor por el número de asignaturas.
+    public async Task<IEnumerable<object>> C25GetNumeroAsignaturasPorProfesor()
+    {
+        return await _context.Personas
+            .Where(p => p.TipoPersona == "Profesor")
+            .Select(p => new
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                PrimerApellido = p.Apellido1,
+                SegundoApellido = p.Apellido2,
+                NumeroAsignaturas = p.Profesor.Asignaturas.Count()
+            })
+            .OrderByDescending(result => result.NumeroAsignaturas)
+            .ToListAsync();
+    }
+
+    // 27. Devuelve un listado con los profesores que no están asociados a un departamento.
+    public async Task<IEnumerable<object>> C27GetProfesoresSinDepartamento()
+    {
+        return await _context.Personas
+            .Where(p => p.TipoPersona == "Profesor" && p.Profesor.IdDepartamento == null)
+            .Select(p => new
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                PrimerApellido = p.Apellido1,
+                SegundoApellido = p.Apellido2
+            })
+            .ToListAsync();
+    }
+
+    // 29. Devuelve un listado con los profesores que tienen un departamento asociado y que no imparten ninguna asignatura
+    public async Task<IEnumerable<object>> C29GetProfesoresSinAsignaturasEnDepartamento()
+    {
+        return await _context.Profesores
+            .Where(p => p.IdDepartamento != null && p.Asignaturas.Count == 0)
+            .Select(p => new
+            {
+                Id = p.IdProfesor,
+                Nombre = p.IdProfesorNavigation.Nombre,
+                Apellido1 = p.IdProfesorNavigation.Apellido1,
+                Apellido2 = p.IdProfesorNavigation.Apellido2
+            })
+            .ToListAsync();
+    }
 
     
+
+
 
 
 

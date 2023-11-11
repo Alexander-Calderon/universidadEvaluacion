@@ -152,6 +152,23 @@ public class PersonaController : BaseApiController
         return _mapper.Map<List<PersonaDto>>(datos);
     }
 
+    [HttpGet("C12GetProfesoresConDepartamento")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C12GetProfesoresConDepartamento()
+    {
+        try
+        {
+            var profesoresConDepartamento = await _unitOfWork.Personas.C12GetProfesoresConDepartamento();
+            return Ok(profesoresConDepartamento);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los profesores con departamentos." });
+        }
+    }
+
+
     [HttpGet("C17GetTotalAlumnas")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -208,11 +225,13 @@ public class PersonaController : BaseApiController
         try
         {
             var resultado = await _unitOfWork.Personas.C26GetAlumnoMasJoven();
-            return Ok(resultado);
+            // return Ok(resultado);
+            return Ok(_mapper.Map<PersonaDto>(resultado)); /* cuando fijo es solo uno y no una lista */
+
         }
-        catch (Exception )
+        catch (Exception ex)
         {            
-            return StatusCode(500, new { MensajeError = "Error al obtener el alumno más joven." });
+            return StatusCode(500, new { MensajeError = "Error al obtener el alumno más joven." }) + ex.Message;
         }
     }
 
@@ -233,6 +252,90 @@ public class PersonaController : BaseApiController
         var datos = await _unitOfWork.Personas.C8GetProfesoresConDepartamento();
         return _mapper.Map<List<ProfesorDto>>(datos);
     }
+
+
+    [HttpGet("C13GetProfesoresYDepartamentosSinAsociar")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<object>>> C13GetProfesoresYDepartamentosSinAsociar()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Personas.C13GetProfesoresYDepartamentosSinAsociar();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener profesores y departamentos sin asociar." });
+        }
+    }
+
+    [HttpGet("C14GetProfesoresSinAsignaturas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<Persona>>> C14GetProfesoresSinAsignaturas()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Personas.C14GetProfesoresSinAsignaturas();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener profesores sin asignaturas." });
+        }
+    }
+
+    [HttpGet("C25GetNumeroAsignaturasPorProfesor")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> C25GetNumeroAsignaturasPorProfesor()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Personas.C25GetNumeroAsignaturasPorProfesor();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener el número de asignaturas por profesor." });
+        }
+    }
+
+    [HttpGet("C27GetProfesoresSinDepartamento")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> C27GetProfesoresSinDepartamento()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Personas.C27GetProfesoresSinDepartamento();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los profesores sin departamento." });
+        }
+    }
+
+    [HttpGet("C29GetProfesoresSinAsignaturasEnDepartamento")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> C29GetProfesoresSinAsignaturasEnDepartamento()
+    {
+        try
+        {
+            var resultado = await _unitOfWork.Personas.C29GetProfesoresSinAsignaturasEnDepartamento();
+            return Ok(resultado);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { MensajeError = "Error al obtener los profesores sin asignaturas en departamento." });
+    }
+}
+
+
+
 
 
 

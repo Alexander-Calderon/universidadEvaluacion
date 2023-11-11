@@ -19,7 +19,7 @@ namespace Infrastructure.Data.Configuration
                 .HasColumnName("id_grado");
             builder.Property(e => e.NombreGrado)
                 .IsRequired()
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .HasColumnName("nombre_grado");
 
             

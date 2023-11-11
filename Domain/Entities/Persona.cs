@@ -6,8 +6,7 @@ namespace Domain.Entities;
 public partial class Persona : BaseEntity
 {
     
-
-    public string Dni { get; set; }
+    public string Nif { get; set; }
 
     public string Nombre { get; set; }
 
@@ -27,7 +26,9 @@ public partial class Persona : BaseEntity
 
     public string TipoPersona { get; set; }
 
+    public virtual Profesor Profesor { get; set; }
+
     public virtual ICollection<AlumnoSeMatriculaAsignatura> AlumnoSeMatriculaAsignaturas { get; set; } = new List<AlumnoSeMatriculaAsignatura>();
 
-    public virtual Profesor Profesor { get; set; }
+
 }

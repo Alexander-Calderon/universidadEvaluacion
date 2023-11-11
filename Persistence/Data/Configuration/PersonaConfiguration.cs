@@ -31,15 +31,14 @@ namespace Infrastructure.Data.Configuration
             builder.Property(e => e.Direccion)
                 .HasMaxLength(255)
                 .HasColumnName("direccion");
-            builder.Property(e => e.Dni)
-                .IsRequired()
-                .HasMaxLength(10)
-                .HasColumnName("dni");
             builder.Property(e => e.FechaNacimiento).HasColumnName("fecha_nacimiento");
             builder.Property(e => e.Genero)
-                .HasMaxLength(1)
-                .IsFixedLength()
+                .HasColumnType("enum('H','M')")
                 .HasColumnName("genero");
+            builder.Property(e => e.Nif)
+                .IsRequired()
+                .HasMaxLength(10)
+                .HasColumnName("nif");
             builder.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -49,7 +48,7 @@ namespace Infrastructure.Data.Configuration
                 .HasColumnName("telefono");
             builder.Property(e => e.TipoPersona)
                 .IsRequired()
-                .HasMaxLength(10)
+                .HasColumnType("enum('alumno','profesor')")
                 .HasColumnName("tipo_persona");
 
             

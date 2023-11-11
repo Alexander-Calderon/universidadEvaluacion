@@ -8,7 +8,6 @@ public partial class Departamento : BaseEntity
 
     public string NombreDepartamento { get; set; }
 
-    public virtual ICollection<Asignatura> Asignaturas { get; set; } = new List<Asignatura>();
-
-    public virtual ICollection<Profesor> Profesors { get; set; } = new List<Profesor>();
+    public virtual ICollection<Profesor> Profesores { get; set; } = new List<Profesor>();
+    
 }

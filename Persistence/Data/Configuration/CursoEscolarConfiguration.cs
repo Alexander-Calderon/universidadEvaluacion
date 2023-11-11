@@ -20,8 +20,12 @@ namespace Infrastructure.Data.Configuration
             builder.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id_curso");
-            builder.Property(e => e.AnioFin).HasColumnName("anio_fin");
-            builder.Property(e => e.AnioInicio).HasColumnName("anio_inicio");
+            builder.Property(e => e.AnioFin)
+                .HasColumnType("year")
+                .HasColumnName("anio_fin");
+            builder.Property(e => e.AnioInicio)
+                .HasColumnType("year")
+                .HasColumnName("anio_inicio");
 
             
         }

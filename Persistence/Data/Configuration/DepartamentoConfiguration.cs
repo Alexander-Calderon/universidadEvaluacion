@@ -22,7 +22,7 @@ namespace Infrastructure.Data.Configuration
                 .HasColumnName("id_departamento");
             builder.Property(e => e.NombreDepartamento)
                 .IsRequired()
-                .HasMaxLength(255)
+                .HasMaxLength(50)
                 .HasColumnName("nombre_departamento");
 
             
