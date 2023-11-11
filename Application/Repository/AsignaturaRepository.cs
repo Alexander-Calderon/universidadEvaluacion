@@ -14,4 +14,6 @@ public class AsignaturaRepository : GenericRepository<Asignatura>, IAsignatura
     }
     
     
+
+    
 }

@@ -16,7 +16,7 @@ public class MappingProfile : Profile
         CreateMap<Persona,PersonaDto>().ReverseMap();
         CreateMap<Profesor,ProfesorDto>().ReverseMap();
         
-        
+        CreateMap<Persona, AlumnoLightDto>().ReverseMap();
         
     }
 }

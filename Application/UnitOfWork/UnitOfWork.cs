@@ -15,7 +15,17 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public UnitOfWork(ApiContext context){
         _context = context;
     }
-    public ICursoEscolar CursoEscolares 
+
+
+    public IAsignatura Asignaturas 
+    {
+        get{
+            _asignatura ??= new AsignaturaRepository(_context);
+            return _asignatura;
+        }
+    }
+    
+    public ICursoEscolar CursosEscolares 
     {
         get {
             _cursoEscolares ??= new CursoEscolarRepository(_context);
@@ -55,13 +65,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         }
     }
 
-    public IAsignatura Asignaturas 
-    {
-        get{
-            _asignatura ??= new AsignaturaRepository(_context);
-            return _asignatura;
-        }
-    }
+    
 
     public void Dispose()
     {

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 namespace Domain.Entities;
 
 public partial class CursoEscolar : BaseEntity
-{
-    public int IdCurso { get; set; }
+{    
 
     public int AnioInicio { get; set; }
 

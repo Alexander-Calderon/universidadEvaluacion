@@ -14,13 +14,15 @@ public partial class ApiContext : DbContext
     public ApiContext(DbContextOptions<ApiContext> options)
         : base(options)
     {
+        
     }
 
+    // si no se mappea el nombre de la tabla, lo tomará del nombre de la propiedad.
     public virtual DbSet<AlumnoSeMatriculaAsignatura> AlumnoSeMatriculaAsignaturas { get; set; }
 
     public virtual DbSet<Asignatura> Asignaturas { get; set; }
 
-    public virtual DbSet<CursoEscolar> CursoEscolars { get; set; }
+    public virtual DbSet<CursoEscolar> CursosEscolares { get; set; }
 
     public virtual DbSet<Departamento> Departamentos { get; set; }
 
@@ -28,11 +30,9 @@ public partial class ApiContext : DbContext
 
     public virtual DbSet<Persona> Personas { get; set; }
 
-    public virtual DbSet<Profesor> Profesors { get; set; }
+    public virtual DbSet<Profesor> Profesores { get; set; }
 
-//     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//         => optionsBuilder.UseMySql("server=localhost;user=invitado;password=1234;database=universidad", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.34-mysql"));
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,6 +43,19 @@ public partial class ApiContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
+
+
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Configuraciones adicionales aquí
+
+            optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
+        }
+    }
+
 
     
 }

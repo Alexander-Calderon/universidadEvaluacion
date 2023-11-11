@@ -8,7 +8,7 @@ namespace Domain.Interface;
 public interface IUnitOfWork
 {
     IAsignatura Asignaturas {get;}
-    ICursoEscolar CursoEscolares {get;}
+    ICursoEscolar CursosEscolares {get;}
     IDepartamento Departamentos {get;}
     IGrado Grados {get;}
     IPersona Personas {get;}

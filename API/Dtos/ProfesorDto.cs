@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace API.Dtos;
 public class ProfesorDto
 {
+    public int Id {get; set;}
     public PersonaDto ProfesorP {get; set;}
     public int IdDepartamento {get; set;}
 }

@@ -6,11 +6,11 @@ using API.Dtos;
 
 
 namespace API.Controllers;
-public class AsignaturaController : BaseApiController
+public class GradoController : BaseApiController
 {
     private IUnitOfWork _unitOfWork;
     private IMapper _mapper;
-    public AsignaturaController(IUnitOfWork unitOfWork, IMapper mapper)
+    public GradoController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -20,36 +20,36 @@ public class AsignaturaController : BaseApiController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]    
-    public async Task<ActionResult<List<AsignaturaDto>>> GetAll() {
-        var asignaturas = await _unitOfWork.Asignaturas.GetAll();
-        return _mapper.Map<List<AsignaturaDto>>(asignaturas); 
+    public async Task<ActionResult<List<GradoDto>>> GetAll() {
+        var grados = await _unitOfWork.Grados.GetAll();
+        return _mapper.Map<List<GradoDto>>(grados); 
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AsignaturaDto>> GetById(int id)
+    public async Task<ActionResult<GradoDto>> GetById(int id)
     {
-        var dato = await _unitOfWork.Asignaturas.GetById(id);
+        var dato = await _unitOfWork.Grados.GetById(id);
         if (dato == null)
         {
             return BadRequest();
         }
-        return _mapper.Map<AsignaturaDto>(dato);
+        return _mapper.Map<GradoDto>(dato);
     }
 
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AsignaturaDto>> GuardarCurso(AsignaturaDto param)
+    public async Task<ActionResult<GradoDto>> GuardarCurso(GradoDto param)
     {
-        var dato = _mapper.Map<Asignatura>(param);
+        var dato = _mapper.Map<Grado>(param);
         if (dato == null)
         {
             return BadRequest();
         }
-        _unitOfWork.Asignaturas.Add(dato);
+        _unitOfWork.Grados.Add(dato);
         await _unitOfWork.SaveAsync();
 
         return param;
@@ -59,14 +59,14 @@ public class AsignaturaController : BaseApiController
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AsignaturaDto>> Actualizar(AsignaturaDto param)
+    public async Task<ActionResult<GradoDto>> Actualizar(GradoDto param)
     {
-        var dato = await _unitOfWork.Asignaturas.GetById(param.Id);
+        var dato = await _unitOfWork.Grados.GetById(param.Id);
         if (dato == null)
         {
             return BadRequest();
         }
-        _unitOfWork.Asignaturas.Update(dato);
+        _unitOfWork.Grados.Update(dato);
         await _unitOfWork.SaveAsync();
 
         return param;
@@ -76,17 +76,17 @@ public class AsignaturaController : BaseApiController
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AsignaturaDto>> Borrar(int id)
+    public async Task<ActionResult<GradoDto>> Borrar(int id)
     {
-        var dato = await _unitOfWork.Asignaturas.GetById(id);
+        var dato = await _unitOfWork.Grados.GetById(id);
         if (dato == null)
         {
             return BadRequest();
         }
-        _unitOfWork.Asignaturas.Remove(dato);
+        _unitOfWork.Grados.Remove(dato);
         await _unitOfWork.SaveAsync();
 
-        return _mapper.Map<AsignaturaDto>(dato);
+        return _mapper.Map<GradoDto>(dato);
     }
 
 

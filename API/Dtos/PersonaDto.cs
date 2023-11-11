@@ -7,8 +7,23 @@ namespace API.Dtos;
 public class PersonaDto
 {
     public int Id {get; set;}
-    public string Nif {get; set;}
-    public string Apellido1 { get; set; }
-    public string Apellido2 { get; set; }
+    public string Dni { get; set; }
+
     public string Nombre { get; set; }
+
+    public string Apellido1 { get; set; }
+
+    public string Apellido2 { get; set; }
+
+    public string Ciudad { get; set; }
+
+    public string Direccion { get; set; }
+
+    public string Telefono { get; set; }
+
+    public DateOnly? FechaNacimiento { get; set; }
+
+    public string Genero { get; set; }
+
+    public string TipoPersona { get; set; }
 }

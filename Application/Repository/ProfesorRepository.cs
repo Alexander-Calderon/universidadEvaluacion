@@ -12,5 +12,10 @@ public class ProfesorRepository : GenericRepository<Profesor>, IProfesor
     {
         _context = context;
     }
+
+    
+
+    
+
     
 }

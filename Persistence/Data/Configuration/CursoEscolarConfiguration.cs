@@ -13,11 +13,11 @@ namespace Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<CursoEscolar> builder)
         {
 
-            builder.HasKey(e => e.IdCurso).HasName("PRIMARY");
+            builder.HasKey(e => e.Id).HasName("PRIMARY");
 
             builder.ToTable("curso_escolar");
 
-            builder.Property(e => e.IdCurso)
+            builder.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id_curso");
             builder.Property(e => e.AnioFin).HasColumnName("anio_fin");

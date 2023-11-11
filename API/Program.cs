@@ -31,6 +31,12 @@ builder.Services.AddDbContext<ApiContext>(options =>
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 // fin custom servicios
 
+
+
+
+
+//testing
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
